@@ -1,12 +1,41 @@
 <template>
   <div class="admin-page">
     <h1>This is the admin panel!</h1>
+    <section class="new-post">
+      <AppButton @click="$router.push('/admin/new-post')">Create Post</AppButton>
+    </section>
+    <section class="existing-posts">
+      <h2>Existing Posts</h2>
+      <PostList isAdmin />
+    </section>
   </div>
 </template>
 
+<script>
+  import PostList from '~/components/Posts/PostList';
+  import AppButton from '~/components/UI/AppButton';
+
+  export default {
+    components: {
+      PostList,
+      AppButton,
+    },
+    layout: 'admin',
+  }
+</script>
+
 <style scoped>
   .admin-page {
+    padding: 20px;
+  }
+
+  .new-post {
     text-align: center;
-    padding: 30px;
+    border-bottom: 2px solid #ccc;
+    padding-bottom: 10px;
+  }
+
+  .existing-posts h2 {
+    text-align: center;
   }
 </style>

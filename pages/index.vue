@@ -3,38 +3,18 @@
     <section class="intro">
       <h1>Get the latest tech news!</h1>
     </section>
-    <section class="featured-posts">
-      <PostPreview
-        id="1"
-        thumbnail="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnIZ8WPUYMRIXtHZTl9ZoSq3hVjkQug9SD1v_GdrRmI8A7H968"
-        title="Server Stuff!!"
-        previewText="Servers are crazy.  This post is about servers and all the crazy things you can do with them."
-      />
-      <PostPreview
-        id="2"
-        thumbnail="https://img.etimg.com/thumb/msid-62427644,width-300,imgsize-172533,resizemode-4/tech-thinkstock.jpg"
-        title="Data Stuff!!"
-        previewText="Data is crazy stuff.  This post is about data and all the crazy things you can do with data."
-      />
-      <PostPreview
-        id="3"
-        thumbnail="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnIZ8WPUYMRIXtHZTl9ZoSq3hVjkQug9SD1v_GdrRmI8A7H968"
-        title="Server Stuff!!"
-        previewText="Servers are crazy.  This post is about servers and all the crazy things you can do with them."
-      />
-    </section>
+    <PostList />
   </div>
 </template>
 
 <script>
-  import PostPreview from '~/components/posts/PostPreview'
+  import PostList from '~/components/Posts/PostList'
 
   export default {
     components: {
-      PostPreview
+      PostList
     }
   }
-
 </script>
 
 <style scoped>
@@ -67,14 +47,5 @@
     .intro h1 {
       font-size: 2rem;
     }
-  }
-
-  .featured-posts {
-    display: flex;
-    padding: 20px;
-    box-sizing: border-box;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
   }
 </style>
