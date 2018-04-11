@@ -1,25 +1,13 @@
 <template>
     <section class="post-list">
       <PostPreview
-        id="1"
+        v-for="post in posts"
+        :key="post.id"
+        :id="post.id"
         :is-admin="isAdmin"
-        thumbnail="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnIZ8WPUYMRIXtHZTl9ZoSq3hVjkQug9SD1v_GdrRmI8A7H968"
-        title="Server Stuff!!"
-        previewText="Servers are crazy.  This post is about servers and all the crazy things you can do with them."
-      />
-      <PostPreview
-        id="2"
-        :is-admin="isAdmin"
-        thumbnail="https://img.etimg.com/thumb/msid-62427644,width-300,imgsize-172533,resizemode-4/tech-thinkstock.jpg"
-        title="Data Stuff!!"
-        previewText="Data is crazy stuff.  This post is about data and all the crazy things you can do with data."
-      />
-      <PostPreview
-        id="3"
-        :is-admin="isAdmin"
-        thumbnail="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnIZ8WPUYMRIXtHZTl9ZoSq3hVjkQug9SD1v_GdrRmI8A7H968"
-        title="Server Stuff!!"
-        previewText="Servers are crazy.  This post is about servers and all the crazy things you can do with them."
+        :thumbnail="post.thumbnail"
+        :title="post.title"
+        :previewText="post.previewText"
       />
     </section>
 </template>
@@ -35,6 +23,10 @@
       isAdmin: {
         type: Boolean,
         required: false,
+      },
+      posts: {
+        type: Array,
+        required: true,
       }
     }
   }

@@ -31,6 +31,7 @@
 <style>
   html {
     font-family: 'Open Sans', sans-serif;
+    overflow-y: scroll;
   }
 
   body {

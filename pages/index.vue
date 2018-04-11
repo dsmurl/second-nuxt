@@ -3,7 +3,9 @@
     <section class="intro">
       <h1>Get the latest tech news!</h1>
     </section>
-    <PostList />
+    <PostList
+      :posts="loadedPosts"
+    />
   </div>
 </template>
 
@@ -13,6 +15,42 @@
   export default {
     components: {
       PostList
+    },
+    data() {
+      return {
+        loadedPosts: []
+      }
+    },
+    asyncData(context, callback) {
+      setTimeout(() => {
+        callback(null,
+          {
+            loadedPosts: [
+              {
+                id: "1",
+                thumbnail: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnIZ8WPUYMRIXtHZTl9ZoSq3hVjkQug9SD1v_GdrRmI8A7H968",
+                title: "Server Stuff!!",
+                previewText: "Servers are crazy.  This post is about servers and all the crazy things you can do with them.",
+              },
+              {
+                id: "2",
+                thumbnail: "https://img.etimg.com/thumb/msid-62427644,width-300,imgsize-172533,resizemode-4/tech-thinkstock.jpg",
+                title: "Data Stuff!!",
+                previewText: "Data is crazy stuff.  This post is about data and all the crazy things you can do with data.",
+              },
+              {
+                id: "3",
+                thumbnail: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnIZ8WPUYMRIXtHZTl9ZoSq3hVjkQug9SD1v_GdrRmI8A7H968",
+                title: "Server Stuff!!",
+                previewText: "Servers are crazy.  This post is about servers and all the crazy things you can do with them.",
+              },
+            ]
+          }
+        );
+      }, 1500);
+    },
+    created() {
+
     }
   }
 </script>
@@ -30,22 +68,16 @@
 
   .intro h1 {
     position: absolute;
+    font-size: 2rem;
     top: 10%;
     left: 5%;
     width: 90%;
-    font-size: 1.5rem;
-    color: black;
-    background-color: rgb(211, 211, 211);
-    padding: 10px;
-    border-radius: 10px;
-    box-shadow: 3px 3px 3px black;
-    box-sizing: border-box;
-    border: 1px solid black;
+    text-align: center;
   }
 
   @media (min-width: 768px) {
     .intro h1 {
-      font-size: 2rem;
+      font-size: 4rem;
     }
   }
 </style>
