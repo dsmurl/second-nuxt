@@ -1,8 +1,9 @@
 <template>
   <div class="posts-page">
     <h1>These are the posts!</h1>
-    <PostList />
-  </div>
+    <PostList
+      :posts="loadedPosts"
+    />  </div>
 </template>
 
 <script>
@@ -11,6 +12,11 @@
   export default {
     components: {
       PostList
+    },
+    computed: {
+      loadedPosts() {
+        return this.$store.getters.loadedPosts;
+      }
     }
   }
 </script>

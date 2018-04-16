@@ -1,17 +1,17 @@
 <template>
   <div class="single-post-page">
     <section class="post">
-      <h1 class="post-title">Title of post</h1>
+      <h1 class="post-title">{{ loadedPost.title }}</h1>
       <div class="post-details">
         <div class="post-detail">
-          Written by
+          Written by {{ loadedPost.author }}
         </div>
         <div class="post-detail">
-          Last updated on
+          Last updated on {{ loadedPost.updatedDate }}
         </div>
       </div>
       <p class="post-content">
-        This is the post message
+        {{ loadedPost.content }}
       </p>
       <div class="post-feedback">
         <p>
@@ -21,6 +21,27 @@
     </section>
   </div>
 </template>
+
+<script>
+  export default {
+    asyncData(context, callback) {
+      setTimeout(
+        callback(null, {
+          loadedPost: {
+              id: "1",
+              thumbnail: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnIZ8WPUYMRIXtHZTl9ZoSq3hVjkQug9SD1v_GdrRmI8A7H968",
+              title: "Server Stuff from asyncData!!   (ID: " + context.route.params.id + ")",
+              author: "Samuel B.",
+              updatedDate: new Date(),
+              content: 'Some dummy text, which isnt the preveiw text.',
+              previewText: "Servers are crazy.  This post is about servers and all the crazy things you can do with them.",
+            }
+          }
+        ), 1000
+      );
+    }
+  }
+</script>
 
 <style scoped>
   .single-post-page {
