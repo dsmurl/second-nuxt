@@ -11,6 +11,11 @@
       v-model="editedPost.content">Content
     </AppControlInput>
 
+    <AppControlInput
+      control-type="textarea"
+      v-model="editedPost.previewText">Preview
+    </AppControlInput>
+
     <AppButton type="submit">Save</AppButton>
 
     <AppButton
@@ -41,6 +46,7 @@
             author: '',
             title: '',
             thumbnailLink: '',
+            previewText: '',
             content: '',
           }
       }
@@ -48,8 +54,10 @@
     methods: {
       onSave() {
         // Save the post
-        console.log("This edited post: ", this.editedPost);
-
+        this.$emit('submit', {
+          ...this.editedPost,
+          updatedDate: new Date(),
+        });
         this.$router.push('/admin');
       },
       onCancel() {

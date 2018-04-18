@@ -1,4 +1,6 @@
-import Veux from 'vuex'
+import Veux from 'vuex';
+import axios from 'axios';
+import config from '~/config/config.js';
 
 const createStore = () => {
   return new Veux.Store({
@@ -14,40 +16,16 @@ const createStore = () => {
     },
     actions: {
       nuxtServerInit(vuexContext, context) {
-        return new Promise((resolve, reject) => {
-          setTimeout(() => {
-            resolve({
-              loadedPosts: [
-                {
-                  id: "1",
-                  thumbnail: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnIZ8WPUYMRIXtHZTl9ZoSq3hVjkQug9SD1v_GdrRmI8A7H968",
-                  title: "Server Stuff!!",
-                  previewText: "Servers are crazy.  This post is about servers and all the crazy things you can do with them.",
-                },
-                {
-                  id: "2",
-                  thumbnail: "https://img.etimg.com/thumb/msid-62427644,width-300,imgsize-172533,resizemode-4/tech-thinkstock.jpg",
-                  title: "Data Stuff!!",
-                  previewText: "Data is crazy stuff.  This post is about data and all the crazy things you can do with data.",
-                },
-                {
-                  id: "3",
-                  thumbnail: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnIZ8WPUYMRIXtHZTl9ZoSq3hVjkQug9SD1v_GdrRmI8A7H968",
-                  title: "Server Stuff!!",
-                  previewText: "Servers are crazy.  This post is about servers and all the crazy things you can do with them.",
-                },
-              ]
-            });
-          }, 1500);
+        return axios.get(config.fireBaseUrl + 'posts.json')
+          .then(response => {
+            const postArray = [];
+            for (const key in response.data) {
+              postArray.push({ ...response.data[key], id: key});
+            }
 
-          // reject(new Error());
-        })
-          .then(data => {
-            vuexContext.commit('setPosts', data.loadedPosts);
+            vuexContext.commit('setPosts', postArray);
           })
-          .catch(e => {
-            context.error(e);
-          });
+          .catch(e => context.error(e));
       },
       setPosts(vuexContext, posts) {
         vuexContext.commit('setPosts', posts);

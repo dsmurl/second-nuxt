@@ -23,22 +23,18 @@
 </template>
 
 <script>
+  import axios from 'axios';
+  import config from '~/config/config.js';
+
   export default {
-    asyncData(context, callback) {
-      setTimeout(
-        callback(null, {
-          loadedPost: {
-              id: "1",
-              thumbnail: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnIZ8WPUYMRIXtHZTl9ZoSq3hVjkQug9SD1v_GdrRmI8A7H968",
-              title: "Server Stuff from asyncData!!   (ID: " + context.route.params.id + ")",
-              author: "Samuel B.",
-              updatedDate: new Date(),
-              content: 'Some dummy text, which isnt the preveiw text.',
-              previewText: "Servers are crazy.  This post is about servers and all the crazy things you can do with them.",
-            }
-          }
-        ), 1000
-      );
+    asyncData(context) {
+      return axios.get(config.fireBaseUrl + 'posts/' + context.params.id + '.json')
+        .then(response => {
+          return {
+            loadedPost: response.data
+          };
+        })
+        .catch(e => context.error(e));
     }
   }
 </script>

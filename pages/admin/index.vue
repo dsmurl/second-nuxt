@@ -2,7 +2,8 @@
   <div class="admin-page">
     <h1>This is the admin panel!</h1>
     <section class="new-post">
-      <AppButton @click="$router.push('/admin/new-post')">Create Post</AppButton>
+      <AppButton class="button" @click="$router.push('/admin/new-post')">Create Post</AppButton>
+      <AppButton class="button" @click="$router.push('/')">Home</AppButton>
     </section>
     <section class="existing-posts">
       <h2>Existing Posts</h2>
@@ -41,6 +42,10 @@
     text-align: center;
     border-bottom: 2px solid #ccc;
     padding-bottom: 10px;
+  }
+
+  .button {
+    margin: 5px;
   }
 
   .existing-posts h2 {

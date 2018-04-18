@@ -8,20 +8,21 @@
 
 <script>
   import AdminPostForm from '~/components/admin/AdminPostForm';
+  import axios from 'axios';
+  import config from '~/config/config.js';
 
   export default {
     components: {
       AdminPostForm,
     },
-    data() {
-      return {
-        loadedPost: {
-          author: 'Samuel Bagot',
-          title: 'My awesome post!',
-          content: 'Super amazing content, you should donate!',
-          thumbnailLink: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnIZ8WPUYMRIXtHZTl9ZoSq3hVjkQug9SD1v_GdrRmI8A7H968',
-        }
-      }
+    asyncData(context) {
+      return axios.get(config.fireBaseUrl + 'posts/' + context.params.id + '.json')
+        .then(response => {
+          return {
+            loadedPost: response.data
+          };
+        })
+        .catch(e => context.error(e));
     },
     layout: 'admin',
   }
