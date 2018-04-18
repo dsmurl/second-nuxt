@@ -1,7 +1,3 @@
-const config = {
-  fireBaseUrl: '',
-}
-
 export default {
-  config,
+  fireBaseUrl: ''
 }
