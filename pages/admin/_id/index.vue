@@ -1,7 +1,7 @@
 <template>
   <div class="admin-post-page">
     <section class="update-form">
-      <AdminPostForm :post="loadedPost"/>
+      <AdminPostForm :post="loadedPost" @submit="onSubmitted"/>
     </section>
   </div>
 </template>
@@ -24,6 +24,21 @@
         })
         .catch(e => context.error(e));
     },
+    methods: {
+      onSubmitted(editedPost) {
+        console.log('this.$route: ', this);
+
+        axios.put(
+          config.fireBaseUrl + 'posts/' + this.$route.params.id + '.json',
+          editedPost)
+          .then(response => {
+           this.$toast.show('Post Saved!');
+          })
+          .catch(e => {
+            this.$toast.error('Save Error: ' + e.toString());
+          });
+      }
+    },
     layout: 'admin',
   }
 </script>
@@ -33,6 +48,7 @@
     width: 90%;
     margin: 20px auto;
   }
+
   @media (min-width: 768px) {
     .update-form {
       width: 500px;

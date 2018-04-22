@@ -18,7 +18,10 @@
     methods: {
       onSubmitted(postData) {
         axios.post(config.fireBaseUrl + 'posts.json', postData)
-          .then(result => console.log(result))
+          .then(result => {
+            console.log(result);
+            this.$toast.show('Post Created!');
+          })
           .catch(e => console.log(e));
       }
     },
