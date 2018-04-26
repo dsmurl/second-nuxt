@@ -8,8 +8,6 @@
 
 <script>
   import AdminPostForm from '~/components/admin/AdminPostForm';
-  import axios from 'axios';
-  import config from '~/config/config.js';
 
   export default {
     components: {
@@ -17,12 +15,10 @@
     },
     methods: {
       onSubmitted(postData) {
-        axios.post(config.fireBaseUrl + 'posts.json', postData)
-          .then(result => {
-            console.log(result);
-            this.$toast.show('Post Created!');
-          })
-          .catch(e => console.log(e));
+        this.$store.dispatch('addPost', postData)
+        .then(() => {
+          this.$router.push('/admin');
+        });
       }
     },
     layout: 'admin',

@@ -12,6 +12,13 @@ const createStore = () => {
     mutations: {
       setPosts(state, posts) {
         state.loadedPosts = posts;
+      },
+      editPost(state, editedPost) {
+        const postIndex = state.loadedPosts.findIndex(post => post.id === editedPost.id);
+        state.loadedPosts[postIndex] = editedPost;
+      },
+      addPost(state, newPost) {
+        state.loadedPosts.push(newPost);
       }
     },
     actions: {
@@ -29,6 +36,39 @@ const createStore = () => {
       },
       setPosts(vuexContext, posts) {
         vuexContext.commit('setPosts', posts);
+      },
+      editPost(vuexContext, postData) {
+        const editedPost = {
+          ...postData,
+          updatedDate: new Date()
+        };
+
+        return axios.put(
+          config.fireBaseUrl + 'posts/' + editedPost.id + '.json',
+          editedPost)
+          .then(response => {
+            vuexContext.commit('editPost', editedPost);
+            this.$toast.show('Post Saved!');
+          })
+          .catch(e => {
+            this.$toast.error('Save Error: ' + e.toString());
+          });
+      },
+      addPost(vuexContext, postData) {
+        const createdPost = {
+          ...postData,
+          updatedDate: new Date()
+        };
+
+        return axios.post(config.fireBaseUrl + 'posts.json', createdPost)
+          .then(response => {
+            vuexContext.commit('addPost', {
+              ...createdPost,
+              id: response.data.name
+            });
+            this.$toast.show('Post Created!');
+          })
+          .catch(e => console.log(e));
       }
     },
     getters: {

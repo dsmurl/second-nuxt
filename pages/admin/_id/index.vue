@@ -18,25 +18,23 @@
     asyncData(context) {
       return axios.get(config.fireBaseUrl + 'posts/' + context.params.id + '.json')
         .then(response => {
+          const loadedPost = {
+            ...response.data,
+            id: context.params.id
+          };
+
           return {
-            loadedPost: response.data
+            loadedPost: loadedPost
           };
         })
         .catch(e => context.error(e));
     },
     methods: {
       onSubmitted(editedPost) {
-        console.log('this.$route: ', this);
-
-        axios.put(
-          config.fireBaseUrl + 'posts/' + this.$route.params.id + '.json',
-          editedPost)
-          .then(response => {
-           this.$toast.show('Post Saved!');
-          })
-          .catch(e => {
-            this.$toast.error('Save Error: ' + e.toString());
-          });
+        this.$store.dispatch('editPost', editedPost)
+        .then(() => {
+          this.$router.push('/admin');
+        });
       }
     },
     layout: 'admin',

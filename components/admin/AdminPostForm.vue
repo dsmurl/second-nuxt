@@ -1,19 +1,19 @@
 <template>
   <form @submit.prevent="onSave">
-    <AppControlInput v-model="editedPost.author">Author Name</AppControlInput>
+    <AppControlInput v-model="postData.author">Author Name</AppControlInput>
 
-    <AppControlInput v-model="editedPost.title">Title</AppControlInput>
+    <AppControlInput v-model="postData.title">Title</AppControlInput>
 
-    <AppControlInput v-model="editedPost.thumbnailLink">Thumbnail Link</AppControlInput>
+    <AppControlInput v-model="postData.thumbnailLink">Thumbnail Link</AppControlInput>
 
     <AppControlInput
       control-type="textarea"
-      v-model="editedPost.content">Content
+      v-model="postData.content">Content
     </AppControlInput>
 
     <AppControlInput
       control-type="textarea"
-      v-model="editedPost.previewText">Preview
+      v-model="postData.previewText">Preview
     </AppControlInput>
 
     <AppButton type="submit">Save</AppButton>
@@ -40,7 +40,7 @@
     },
     data() {
       return {
-        editedPost: this.post
+        postData: this.post
           ? {...this.post}
           : {
             author: '',
@@ -54,11 +54,7 @@
     methods: {
       onSave() {
         // Save the post
-        this.$emit('submit', {
-          ...this.editedPost,
-          updatedDate: new Date(),
-        });
-        this.$router.push('/admin');
+        this.$emit('submit', this.postData);
       },
       onCancel() {
         // Cancel the post
