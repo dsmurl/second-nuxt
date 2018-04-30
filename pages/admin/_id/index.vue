@@ -9,14 +9,13 @@
 <script>
   import AdminPostForm from '~/components/admin/AdminPostForm';
   import axios from 'axios';
-  import config from '~/config/config.js';
 
   export default {
     components: {
       AdminPostForm,
     },
     asyncData(context) {
-      return axios.get(config.fireBaseUrl + 'posts/' + context.params.id + '.json')
+      return axios.get(process.env.fireBaseUrl + 'posts/' + context.params.id + '.json')
         .then(response => {
           const loadedPost = {
             ...response.data,

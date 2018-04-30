@@ -7,7 +7,7 @@ module.exports = {
   ** Headers of the page
   */
   head: {
-    title: pkg.name,
+    title: 'Sams Blog',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -22,8 +22,15 @@ module.exports = {
   /*
   ** Customize the progress-bar color
   */
-  loading: { color: '#0f2680' },
-
+  loading: {
+    color: '#0f2680',
+    height: 4,
+    duration: 5000
+  },
+  loadingIndicator: {
+    name: 'circle',
+    color: '#0f2680',
+  },
   /*
   ** Global CSS
   */
@@ -65,6 +72,9 @@ module.exports = {
     extend(config, ctx) {
 
     }
+  },
+  env: {
+    fireBaseUrl: process.env.FIRE_BASE_URL || 'https://nuxt-blog-1b48c.firebaseio.com/'
   }
   // ,  router: {  // For subpath publishing
   //   base: '/nuxt-blog/'

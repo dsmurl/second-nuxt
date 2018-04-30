@@ -1,6 +1,5 @@
 import Veux from 'vuex';
 import axios from 'axios';
-import config from '~/config/config.js';
 
 const createStore = () => {
   return new Veux.Store({
@@ -23,7 +22,7 @@ const createStore = () => {
     },
     actions: {
       nuxtServerInit(vuexContext, context) {
-        return axios.get(config.fireBaseUrl + 'posts.json')
+        return axios.get(process.env.fireBaseUrl + 'posts.json')
           .then(response => {
             const postArray = [];
             for (const key in response.data) {
@@ -44,7 +43,7 @@ const createStore = () => {
         };
 
         return axios.put(
-          config.fireBaseUrl + 'posts/' + editedPost.id + '.json',
+          process.env.fireBaseUrl + 'posts/' + editedPost.id + '.json',
           editedPost)
           .then(response => {
             vuexContext.commit('editPost', editedPost);
@@ -60,7 +59,7 @@ const createStore = () => {
           updatedDate: new Date()
         };
 
-        return axios.post(config.fireBaseUrl + 'posts.json', createdPost)
+        return axios.post(process.env.fireBaseUrl + 'posts.json', createdPost)
           .then(response => {
             vuexContext.commit('addPost', {
               ...createdPost,
