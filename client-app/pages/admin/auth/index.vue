@@ -30,7 +30,7 @@
         isLogin: true
       }
     },
-    layout: 'admin',
+    // layout: 'admin',
   }
 </script>
 

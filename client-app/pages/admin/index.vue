@@ -29,7 +29,7 @@
         return this.$store.getters.loadedPosts;
       }
     },
-    layout: 'admin',
+    // layout: 'admin',
   }
 </script>
 

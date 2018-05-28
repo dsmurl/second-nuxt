@@ -35,8 +35,8 @@ module.exports = {
   ** Global CSS
   */
   css: [
+    '~/assets/styles/main.css'
   ],
-
   /*
   ** Plugins to load before mounting the App
   */
@@ -75,8 +75,13 @@ module.exports = {
   },
   env: {
     fireBaseUrl: process.env.FIRE_BASE_URL || 'https://nuxt-blog-1b48c.firebaseio.com/'
-  }
+  },
   // ,  router: {  // For subpath publishing
   //   base: '/nuxt-blog/'
-  // }
+  // },
+  srcDir: 'client-app/',
+  transition: {
+    name: 'fade',
+    mode: 'out-in'
+  }
 };
