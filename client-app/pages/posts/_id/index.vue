@@ -7,7 +7,7 @@
           Written by {{ loadedPost.author }}
         </div>
         <div class="post-detail">
-          Last updated on {{ loadedPost.updatedDate }}
+          Last updated on {{ loadedPost.updatedDate | date}}
         </div>
       </div>
       <p class="post-content">
