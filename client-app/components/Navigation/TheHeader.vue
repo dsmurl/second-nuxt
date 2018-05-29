@@ -1,6 +1,6 @@
 <template>
 <div class="header-container">
-  <header class="the-header">
+  <header :style="dynamicHeaderStyle" >
     <TheSideNavToggle @toggle="$emit('sidenavToggle')" />
     <div class="logo">
       <nuxt-link to="/">Sams Blog</nuxt-link>
@@ -24,7 +24,30 @@ export default {
   name: "TheHeader",
   components: {
     TheSideNavToggle
-  }
+  },
+  props: {
+    barColor: {
+      type: String,
+      required: false,
+      default: 'black'
+    }
+  },
+  computed : {
+    dynamicHeaderStyle() {
+      return {
+        width: '100%',
+        position: 'fixed',
+        height: '60px',
+        display: 'flex',
+        justifyContent: 'space-around',
+        alignItems: 'center',
+        backgroundColor: `${this.barColor}`,
+        zIndex: '100',
+        boxSizing: 'border-box',
+        padding: '0 20px',
+      };
+    },
+  },
 };
 </script>
 
@@ -32,19 +55,6 @@ export default {
 <style scoped>
 .header-container {
   height: 60px;
-}
-
-.the-header {
-  width: 100%;
-  position: fixed;
-  height: 60px;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  background-color: black;
-  z-index: 100;
-  box-sizing: border-box;
-  padding: 0 20px;
 }
 
 .logo {

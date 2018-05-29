@@ -21,7 +21,7 @@
         });
       }
     },
-    // layout: 'admin',
+    layout: 'admin',
   }
 </script>
 

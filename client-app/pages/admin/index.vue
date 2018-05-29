@@ -3,7 +3,7 @@
     <h1>This is the admin panel!</h1>
     <section class="new-post">
       <AppButton class="button" @click="$router.push('/admin/new-post')">Create Post</AppButton>
-      <AppButton class="button" @click="$router.push('/')">Home</AppButton>
+      <!--<AppButton class="button" @click="$router.push('/')">Home</AppButton>-->
     </section>
     <section class="existing-posts">
       <h2>Existing Posts</h2>
@@ -27,7 +27,7 @@
         return this.$store.getters.loadedPosts;
       }
     },
-    // layout: 'admin',
+    layout: 'admin',
   }
 </script>
 
@@ -37,7 +37,7 @@
   }
 
   .new-post {
-    text-align: center;
+    text-align: right;
     border-bottom: 2px solid #ccc;
     padding-bottom: 10px;
   }
