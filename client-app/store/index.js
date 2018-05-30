@@ -6,7 +6,9 @@ const createStore = () => {
     state: {
       loadedPosts: [
 
-        ]
+        ],
+      userIdToken: null,
+      userEmail: null
     },
     mutations: {
       setPosts(state, posts) {
@@ -18,6 +20,10 @@ const createStore = () => {
       },
       addPost(state, newPost) {
         state.loadedPosts.push(newPost);
+      },
+      setUser(state, userData) {
+        state.userIdToken = userData.userIdToken;
+        state.userEmail = userData.userEmail;
       }
     },
     actions: {
@@ -43,14 +49,14 @@ const createStore = () => {
         };
 
         return axios.put(
-          process.env.fireBaseUrl + 'posts/' + editedPost.id + '.json',
+          process.env.fireBaseUrl + 'posts/' + editedPost.id + '.json?auth=' + vuexContext.state.userIdToken,
           editedPost)
           .then(response => {
             vuexContext.commit('editPost', editedPost);
             this.$toast.show('Post Saved!');
           })
           .catch(e => {
-            this.$toast.error('Save Error: ' + e.toString());
+            this.$toast.error('Save Post Error: ' + e.toString());
           });
       },
       addPost(vuexContext, postData) {
@@ -59,7 +65,7 @@ const createStore = () => {
           updatedDate: new Date()
         };
 
-        return axios.post(process.env.fireBaseUrl + 'posts.json', createdPost)
+        return axios.post(process.env.fireBaseUrl + 'posts.json?auth=' + vuexContext.state.userIdToken, createdPost)
           .then(response => {
             vuexContext.commit('addPost', {
               ...createdPost,
@@ -67,14 +73,52 @@ const createStore = () => {
             });
             this.$toast.show('Post Created!');
           })
-          .catch(e => console.log(e));
+          .catch(e => {
+            console.log(e);
+            this.$toast.error('Add Post Error: ' + e.toString());
+          });
+      },
+      authenticateUser(vuexContext, authData) {
+        let targetUrl = authData.isLogin
+          ? process.env.fireAuthSigninUrl + process.env.fireApiKey
+          : process.env.fireAuthSignupUrl + process.env.fireApiKey;
+
+        return axios.post(
+          targetUrl,
+          {
+            email: authData.email,
+            password: authData.password,
+            returnSecureToken: true,
+          })
+          .then(response => {
+            vuexContext.commit('setUser', {
+              userIdToken: response.data.idToken,
+              userEmail: response.data.email
+            });
+
+            this.$router.push('/');
+            this.$toast.show('Logged in as ' + authData.email);
+          })
+          .catch(e => {
+            console.log(e);
+            this.$toast.error('Auth Error: ' + e.toString());
+          });
       }
     },
     getters: {
       loadedPosts(state) {
         return state.loadedPosts;
+      },
+      isAuthenticated(state) {
+        return state.userIdToken != null;
+      },
+      isAdmin(state) {
+        return (
+          (state.userIdToken != null) &&
+          (state.userEmail === process.env.adminEmail)
+        );
       }
-    },
+    }
   });
 };
 

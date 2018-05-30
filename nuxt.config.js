@@ -76,7 +76,11 @@ module.exports = {
     }
   },
   env: {
-    fireBaseUrl: process.env.FIRE_BASE_URL || 'https://nuxt-blog-1b48c.firebaseio.com/'
+    fireBaseUrl: process.env.FIRE_BASE_URL || 'https://nuxt-blog-1b48c.firebaseio.com/',
+    fireAuthSigninUrl:  'https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=',
+    fireAuthSignupUrl:  'https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=',
+    fireApiKey: process.env.FIRE_API_KEY || '',
+    adminEmail: process.env.ADMIN_EMAIL || 'sam@sam.com'
   },
   // ,  router: {  // For subpath publishing
   //   base: '/nuxt-blog/'

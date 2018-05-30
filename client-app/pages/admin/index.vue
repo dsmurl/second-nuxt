@@ -19,6 +19,8 @@
   import PostList from '~/components/Posts/PostList';
 
   export default {
+    layout: 'admin',
+    middleware: 'auth',
     components: {
       PostList,
     },
@@ -27,7 +29,6 @@
         return this.$store.getters.loadedPosts;
       }
     },
-    layout: 'admin',
   }
 </script>
 
