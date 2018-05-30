@@ -9,17 +9,22 @@
       @close="displaySidenav = false"
     />
     <nuxt/>
+    <TheFooter
+      barColor='DeepSkyBlue'
+    />
   </div>
 </template>
 
 <script>
   import TheHeader from '~/components/Navigation/TheHeader';
   import TheSidenav from '~/components/Navigation/TheSidenav';
+  import TheFooter from '~/components/Navigation/TheFooter';
 
   export default {
     components: {
       TheHeader,
-      TheSidenav
+      TheSidenav,
+      TheFooter
     },
     data() {
       return {
@@ -33,6 +38,7 @@
   html {
     font-family: 'Open Sans', sans-serif;
     overflow-y: scroll;
+    height: 100%;
   }
 
   body {
