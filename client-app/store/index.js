@@ -24,6 +24,10 @@ const createStore = () => {
       setUser(state, userData) {
         state.userIdToken = userData.userIdToken;
         state.userEmail = userData.userEmail;
+      },
+      clearUser(state) {
+        state.userIdToken = null;
+        state.userEmail = null;
       }
     },
     actions: {
@@ -95,6 +99,7 @@ const createStore = () => {
               userIdToken: response.data.idToken,
               userEmail: response.data.email
             });
+            vuexContext.dispatch('setLogoutTimer', response.data.expiresIn * 1000);
 
             this.$router.push('/');
             this.$toast.show('Logged in as ' + authData.email);
@@ -103,6 +108,11 @@ const createStore = () => {
             console.log(e);
             this.$toast.error('Auth Error: ' + e.toString());
           });
+      },
+      setLogoutTimer(duration) {
+        setTimeout(() => {
+          vuexContext.commit('clearUser');
+          }, duration);
       }
     },
     getters: {
