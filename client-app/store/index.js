@@ -1,5 +1,7 @@
 import Veux from 'vuex';
 import axios from 'axios';
+import Cookie from 'js-cookie';
+import { findCookieValue } from '~/util/util.js';
 
 const createStore = () => {
   return new Veux.Store({
@@ -99,6 +101,17 @@ const createStore = () => {
               userIdToken: response.data.idToken,
               userEmail: response.data.email
             });
+
+            // Set local storage
+            localStorage.setItem('userIdToken', response.data.idToken);
+            localStorage.setItem('userEmail', response.data.email);
+            localStorage.setItem('userExpireTime', `${new Date().getTime() + response.data.expiresIn * 1000}`);
+
+            // Set cookie
+            Cookie.set('userIdToken', response.data.idToken);
+            Cookie.set('userEmail', response.data.email);
+            Cookie.set('userExpireTime', `${new Date().getTime() + response.data.expiresIn * 1000}`);
+
             vuexContext.dispatch('setLogoutTimer', response.data.expiresIn * 1000);
 
             this.$router.push('/');
@@ -109,10 +122,40 @@ const createStore = () => {
             this.$toast.error('Auth Error: ' + e.toString());
           });
       },
-      setLogoutTimer(duration) {
+      setLogoutTimer(vuexContext, duration) {
         setTimeout(() => {
           vuexContext.commit('clearUser');
           }, duration);
+      },
+      initAuth(vuexContext, req) {
+        let userIdToken = null;
+        let userEmail = null;
+        let userExpireTime = null;
+
+        if (req) {
+          if (!req.headers.cookie) { return; }
+
+          userIdToken = findCookieValue(req.headers.cookie, 'userIdToken');
+          userEmail = findCookieValue(req.headers.cookie, 'userEmail');
+          userExpireTime = findCookieValue(req.headers.cookie, 'userExpireTime');
+        } else {
+          userIdToken = localStorage.getItem('userIdToken');
+          userEmail = localStorage.getItem('userEmail');
+          userExpireTime = localStorage.getItem('userExpireTime');
+        }
+        if (userIdToken == null ||
+          userEmail == null ||
+          userExpireTime == null ) { return; }
+
+        if (new Date().getTime() > +userExpireTime || !userIdToken) {
+          return;
+        }
+
+        vuexContext.dispatch('setLogoutTimer', +userExpireTime - (new Date().getTime()));
+        vuexContext.commit('setUser', {
+          userIdToken: userIdToken,
+          userEmail: userEmail
+        });
       }
     },
     getters: {
