@@ -3,7 +3,7 @@
     <h1>This is the admin panel!</h1>
     <section class="new-post">
       <AppButton class="button" @click="$router.push('/admin/new-post')">Create Post</AppButton>
-      <!--<AppButton class="button" @click="$router.push('/')">Home</AppButton>-->
+      <AppButton class="button" @click="onLogoutClicked">Logout</AppButton>
     </section>
     <section class="existing-posts">
       <h2>Existing Posts</h2>
@@ -29,6 +29,14 @@
         return this.$store.getters.loadedPosts;
       }
     },
+    methods: {
+      onLogoutClicked() {
+        this.$store.dispatch('logout')
+        .then(() => {
+          this.$router.push('/admin/auth');
+        });
+      }
+    }
   }
 </script>
 

@@ -62,6 +62,7 @@ const createStore = () => {
             this.$toast.show('Post Saved!');
           })
           .catch(e => {
+            console.log(e);
             this.$toast.error('Save Post Error: ' + e.toString());
           });
       },
@@ -102,11 +103,6 @@ const createStore = () => {
               userEmail: response.data.email
             });
 
-            // Set local storage
-            localStorage.setItem('userIdToken', response.data.idToken);
-            localStorage.setItem('userEmail', response.data.email);
-            localStorage.setItem('userExpireTime', `${new Date().getTime() + Number.parseInt(response.data.expiresIn) * 1000}`);
-
             // Set cookie
             Cookie.set('userIdToken', response.data.idToken);
             Cookie.set('userEmail', response.data.email);
@@ -124,22 +120,23 @@ const createStore = () => {
         let userIdToken = null;
         let userEmail = null;
         let userExpireTime = null;
+        let cookies = null;
 
         if (req) {
           if (!req.headers.cookie) { return; }
 
-          userIdToken = findCookieValue(req.headers.cookie, 'userIdToken');
-          userEmail = findCookieValue(req.headers.cookie, 'userEmail');
-          userExpireTime = findCookieValue(req.headers.cookie, 'userExpireTime');
+          cookies = req.headers.cookie;
         } else {
-          userIdToken = localStorage.getItem('userIdToken');
-          userEmail = localStorage.getItem('userEmail');
-          userExpireTime = localStorage.getItem('userExpireTime');
+          cookies = document.cookie;
         }
 
+        userIdToken = findCookieValue(cookies, 'userIdToken');
+        userEmail = findCookieValue(cookies, 'userEmail');
+        userExpireTime = findCookieValue(cookies, 'userExpireTime');
+
         if (new Date().getTime() > Number.parseInt(userExpireTime) || !userIdToken) {
-          vuexContext.commit('clearUser');
-          this.$toast.error('User Auth Timed Out');
+          vuexContext.dispatch('logout');
+
           return;
         }
 
@@ -147,6 +144,13 @@ const createStore = () => {
           userIdToken: userIdToken,
           userEmail: userEmail
         });
+      },
+      logout(vuexContext) {
+          vuexContext.commit('clearUser');
+
+          Cookie.remove('userIdToken');
+          Cookie.remove('userEmail');
+          Cookie.remove('userExpireTime');
       }
     },
     getters: {

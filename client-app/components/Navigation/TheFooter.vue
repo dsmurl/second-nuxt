@@ -4,8 +4,8 @@
       <div class="spacer"></div>
       <div class="navigation-items">
         <ul class="nav-list">
-          <li class="nav-item">All Rights Reserved</li>
-          <!--<li class="nav-item"><nuxt-link to="/admin">Admin</nuxt-link></li>-->
+          <!--<li class="nav-item">All Rights Reserved</li>-->
+          <li class="nav-item"><nuxt-link to="/admin">All Rights Reserved</nuxt-link></li>
         </ul>
       </div>
     </div>
