@@ -4,7 +4,7 @@
 
     <AppControlInput v-model="postData.title">Title</AppControlInput>
 
-    <AppControlInput v-model="postData.thumbnailLink">Thumbnail Link</AppControlInput>
+    <AppControlInput v-model="postData.imageName">Thumbnail FileName</AppControlInput>
 
     <AppControlInput
       control-type="textarea"
@@ -43,7 +43,7 @@
           : {
             author: '',
             title: '',
-            thumbnailLink: '',
+            imageName: '',
             previewText: '',
             content: '',
           }

@@ -81,7 +81,8 @@ module.exports = {
     fireAuthSigninUrl:  'https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=',
     fireAuthSignupUrl:  'https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=',
     fireApiKey: process.env.FIRE_API_KEY || '',
-    adminEmail: process.env.ADMIN_EMAIL || 'sam@sam.com'
+    adminEmail: process.env.ADMIN_EMAIL || 'sam@sam.com',
+    minPinBase: process.env.MINPIN_BASE_ADDRESS || "http://www.UNINIT-IMAGE-ADDRESS.com/"
   },
   // ,  router: {  // For subpath publishing
   //   base: '/nuxt-blog/'

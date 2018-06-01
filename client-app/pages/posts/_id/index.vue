@@ -2,6 +2,9 @@
   <div class="single-post-page">
     <section class="post">
       <h1 class="post-title">{{ loadedPost.title }}</h1>
+      <div class="image-area">
+        <img :src="imageLink" :alt="this.loadedPost.imageName" />
+      </div>
       <div class="post-details">
         <div class="post-detail">
           Written by {{ loadedPost.author }}
@@ -24,6 +27,7 @@
 
 <script>
   import axios from 'axios';
+  import path from 'path';
 
   export default {
     asyncData(context) {
@@ -34,6 +38,11 @@
           };
         })
         .catch(e => context.error(e));
+    },
+    computed: {
+      imageLink() {
+        return 'http://' + path.join(process.env.imageServerBaseUrl, '600x400', this.loadedPost.imageName);
+      }
     }
   }
 </script>

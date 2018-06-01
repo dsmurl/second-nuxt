@@ -111,7 +111,10 @@ const createStore = () => {
             this.$router.push('/');
             this.$toast.show('Logged in as ' + authData.email);
 
-            return axios.post('/api/track-data', { data: 'Auth checked'});
+            return axios.post('/api/track-data', { data: 'Auth checked'})
+              .then(() => {
+                return axios.get('/api/env-data');
+              });
           })
           .catch(e => {
             console.log(e);

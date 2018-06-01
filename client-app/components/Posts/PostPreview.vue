@@ -2,7 +2,7 @@
   <nuxt-link :to="postLink" class="post-preview">
     <div
       class="post-thumbnail"
-      :style="{backgroundImage: 'url(' + thumbnailLink + ')'}"
+      :style="{backgroundImage: 'url(\'' + imageLink +'\')'}"
     ></div>
     <div class="post-content">
       <h1>{{ title }}</h1>
@@ -12,6 +12,8 @@
 </template>
 
 <script>
+  import path from 'path';
+
   export default {
     name: 'PostPreview',
     props: {
@@ -31,7 +33,7 @@
         type: String,
         required: true,
       },
-      thumbnailLink: {
+      imageName: {
         type: String,
         required: true,
       }
@@ -39,6 +41,9 @@
     computed: {
       postLink() {
         return this.isAdmin ? '/admin/' + this.id : '/posts/' + this.id;
+      },
+      imageLink() {
+        return 'http://' + path.join(process.env.imageServerBaseUrl, this.imageName);
       }
     }
   }
