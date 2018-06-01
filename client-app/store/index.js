@@ -110,6 +110,8 @@ const createStore = () => {
 
             this.$router.push('/');
             this.$toast.show('Logged in as ' + authData.email);
+
+            return axios.post('/api/track-data', { data: 'Auth checked'});
           })
           .catch(e => {
             console.log(e);
