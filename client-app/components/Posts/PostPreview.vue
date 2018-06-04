@@ -86,5 +86,12 @@
   a:active .post-content {
     background-color: #ccc;
   }
+
+  h1 {
+    font-size: 1.5em;
+    line-height: 1.5em;
+    -webkit-margin-before: 0.83em;
+    -webkit-margin-after: 0.83em;
+  }
 </style>
 

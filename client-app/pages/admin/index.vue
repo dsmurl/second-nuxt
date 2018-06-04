@@ -1,6 +1,6 @@
 <template>
   <div class="admin-page">
-    <h1>This is the admin panel!</h1>
+    <h1>Admin Post Management</h1>
     <section class="new-post">
       <AppButton class="button" @click="$router.push('/admin/new-post')">Create Post</AppButton>
       <AppButton class="button" @click="onLogoutClicked">Logout</AppButton>

@@ -13,13 +13,14 @@ router.use((req, res, next) => {
   next();
 });
 
-router.get('/env-data', (req, res) => {
-  res.status(200).json({ imageServerBaseUrl: imageServerBaseUrl});
-});
-
-router.post('/track-data', (req, res) => {
-  res.status(200).json({ message: 'Success!'});
-});
+// Example Api Calls
+// router.get('/env-data', (req, res) => {
+//   res.status(200).json({ imageServerBaseUrl: imageServerBaseUrl});
+// });
+//
+// router.post('/track-data', (req, res) => {
+//   res.status(200).json({ message: 'Success!'});
+// });
 
 module.exports = {
   path: '/api',

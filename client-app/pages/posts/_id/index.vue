@@ -31,6 +31,12 @@
 
   export default {
     asyncData(context) {
+      if (context.payload) {
+        return {
+          loadedPost: context.payload.postData,
+        }
+      }
+
       return axios.get(process.env.fireBaseUrl + 'posts/' + context.params.id + '.json')
         .then(response => {
           return {

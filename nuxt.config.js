@@ -1,8 +1,9 @@
 const pkg = require('./package');
 const bodyParser = require('body-parser');
+const axios = require('axios');
 
 module.exports = {
-  mode: 'universal',
+  mode: 'universal',  // universal || spa
 
   /*
   ** Headers of the page
@@ -82,7 +83,7 @@ module.exports = {
     fireAuthSignupUrl:  'https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=',
     fireApiKey: process.env.FIRE_API_KEY || '',
     adminEmail: process.env.ADMIN_EMAIL || 'sam@sam.com',
-    imageServerBaseUrl: process.env.IMAGE_SERVER_BASE_URL || "http://www.UNINIT-IMAGE-ADDRESS.com/"
+    imageServerBaseUrl: process.env.IMAGE_SERVER_BASE_URL || "http://www.UNINIT_IMAGE_ADDRESS.com/"
   },
   // ,  router: {  // For subpath publishing
   //   base: '/nuxt-blog/'
@@ -94,6 +95,31 @@ module.exports = {
   },
   serverMiddleware: [
     bodyParser.json(),
-    '~/api'
-  ]
+    __dirname + '/api'
+  ],
+  generate: {
+    routes: function() {
+      const fireBaseUrl = process.env.FIRE_BASE_URL || 'https://nuxt-blog-1b48c.firebaseio.com/';
+      const postsUrl = fireBaseUrl + '/posts.json';
+
+      console.log('postsUrl: ', postsUrl);
+
+      return axios.get(postsUrl)
+        .then(res => {
+          const routes = [];
+          for (const key in res.data) {
+            // routes.push('/posts/' + key);  // Hits route and builds data
+
+            routes.push({     // Hits route and passes optional data
+              route: '/posts/' + key,
+              payload: {
+                postData: res.data[key]
+              }
+            });
+          }
+
+          return routes;
+        });
+    }
+  }
 };

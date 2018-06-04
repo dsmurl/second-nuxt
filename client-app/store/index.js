@@ -111,10 +111,11 @@ const createStore = () => {
             this.$router.push('/');
             this.$toast.show('Logged in as ' + authData.email);
 
-            return axios.post('/api/track-data', { data: 'Auth checked'})
-              .then(() => {
-                return axios.get('/api/env-data');
-              });
+            // Example api calls
+            // return axios.post('/api/track-data', { data: 'Auth checked'})
+            //   .then(() => {
+            //     return axios.get('/api/env-data');
+            //   });
           })
           .catch(e => {
             console.log(e);
@@ -132,12 +133,16 @@ const createStore = () => {
 
           cookies = req.headers.cookie;
         } else {
-          cookies = document.cookie;
+          if (process.client) {
+            cookies = document.cookie;
+          }
         }
 
-        userIdToken = findCookieValue(cookies, 'userIdToken');
-        userEmail = findCookieValue(cookies, 'userEmail');
-        userExpireTime = findCookieValue(cookies, 'userExpireTime');
+        if (cookies != null) {
+          userIdToken = findCookieValue(cookies, 'userIdToken');
+          userEmail = findCookieValue(cookies, 'userEmail');
+          userExpireTime = findCookieValue(cookies, 'userExpireTime');
+        }
 
         if (new Date().getTime() > Number.parseInt(userExpireTime) || !userIdToken) {
           vuexContext.dispatch('logout');
